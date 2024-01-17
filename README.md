@@ -27,14 +27,9 @@ cd aks-cluster-create-terraform-project
 ## Deployment
 
 ### Authenticate & Connect to Azure
-First, set the correct Azure subscription:
+Execute the following command and follow the instructions:
 ```bash
-AZSUB="$(terraform output subscription_id)"
-az account set --subscription $AZSUB
-```
-Then, execute the following command and follow the instructions:
-```bash
-az login --use-device-code
+az login 
 ```
 
 ### Initialize Terraform
@@ -62,7 +57,16 @@ echo "$(terraform output kube_config)" > ~/azurek8s
 ```
 
 ### Connect to the AKS Cluster
-Execute this command to connect to the AKS cluster:
+Execute the following command and follow the instructions:
+```bash
+az login 
+```
+Second, set the correct Azure subscription:
+```bash
+AZSUB="$(terraform output subscription_id)"
+az account set --subscription $AZSUB
+```
+Third, execute this command to connect to the AKS cluster:
 ```bash
 AKSRG="$(terraform output resource_group_name)" 
 AKSNAME="$(terraform output azurerm_kubernetes_cluster_name)" 
