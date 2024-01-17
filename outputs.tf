@@ -1,3 +1,8 @@
+output "subscription_id" {
+  value = azurerm_subscription.current.subscription_id
+  description = "The Subscription ID"
+}
+
 output "resource_group_name" {
   value = azurerm_resource_group.rg.name
 }
