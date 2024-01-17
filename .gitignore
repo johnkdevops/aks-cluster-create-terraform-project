@@ -5,6 +5,9 @@
 *.tfstate
 *.tfstate.*
 
+# kubernetes cluster kubeconfig
+azurek8s
+
 # Crash log files
 crash.log
 
