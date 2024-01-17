@@ -1,5 +1,5 @@
 output "subscription_id" {
-  value = azurerm_subscription.current.subscription_id
+  value = data.azurerm_subscription.current.subscription_id
   description = "The Subscription ID"
 }
 

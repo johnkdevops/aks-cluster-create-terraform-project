@@ -21,13 +21,18 @@ git clone https://github.com/johnkdevops/aks-cluster-create-terraform-project.gi
 
 2. Navigate to the directory of the cloned repository's directory. run:
 ```bash
-cd aks-cluster-create-terraform-project`
+cd aks-cluster-create-terraform-project
 ```
 
 ## Deployment
 
 ### Authenticate & Connect to Azure
-Execute the following command and follow the instructions:
+First, set the correct Azure subscription:
+```bash
+AZSUB="$(terraform output subscription_id)"
+az account set --subscription $AZSUB
+```
+Then, execute the following command and follow the instructions:
 ```bash
 az login --use-device-code
 ```
@@ -36,6 +41,12 @@ az login --use-device-code
 Ensure Terraform is initialised in your project directory:
 ```bash
 terraform init -upgrade
+```
+
+### Review Terraform Plan
+Review the changes Terraform will perform with the following command:
+```bash
+terraform plan -out main.tfplan
 ```
 
 ### Create the AKS Cluster
@@ -51,12 +62,7 @@ echo "$(terraform output kube_config)" > ~/azurek8s
 ```
 
 ### Connect to the AKS Cluster
-Set the Azure subscription:
-```bash
-AZSUB="$(terraform output subscription_id)"
-az account set --subscription $AZSUB
-```
-Now, run this command to connect to the AKS cluster:
+Execute this command to connect to the AKS cluster:
 ```bash
 AKSRG="$(terraform output resource_group_name)" 
 AKSNAME="$(terraform output azurerm_kubernetes_cluster_name)" 
@@ -70,7 +76,7 @@ kubectl get nodes
 ### 6. Deploy the Application
 To deploy the application onto the AKS cluster, run:
 ```bash
-kubectl apply -f *.yaml`
+kubectl apply -f .
 ```
 
 Verify your application was deployed and service is added:
@@ -86,11 +92,12 @@ kubectl get svc -o wide`
 
 Copy the External IP address of the service, paste it into your browser, and you should see the application landing page!
 
-## 8. Cleanup Resources Used
+## 8. Cleaning up
 
-Delete application deployment and service on AKS Cluster:
+To prevent any unwanted costs and tidy up your environment, delete the resources:
+
 ```bash
-kubectl delete service/swiggy-app; kubectl delete deployment.apps/swiggy-app
+kubectl delete --force --grace-period=0 service/swiggy-app; kubectl delete--force --grace-period=0 deployment.apps/swiggy-app
 ```
 
 Verify kubernetes resources were successfully deleted:
