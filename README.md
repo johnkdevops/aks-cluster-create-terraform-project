@@ -81,13 +81,13 @@ kubectl apply -f .
 
 Verify your application was deployed and service is added:
 ```bash
-kubectl get deploy,po,svc` 
+kubectl get deploy,po,svc
 ```
 
 ### 7. Test the Application
 To access your deployed application, use the External IP Address provided by the service:
 ```bash
-kubectl get svc -o wide`
+kubectl get svc -o wide
 ```
 
 Copy the External IP address of the service, paste it into your browser, and you should see the application landing page!
